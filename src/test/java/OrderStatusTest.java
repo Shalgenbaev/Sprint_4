@@ -12,8 +12,8 @@ import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
 
-public class OrderStatusTests {
-    private static final String BROWSER_NAME = "chrome  ";
+public class OrderStatusTest {
+    private static final String BROWSER_NAME = "chrome";
     private static final String PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
     private static final int DEFAULT_TIMEOUT = 3;
     private static final By CLOSE_COOKIE = By.className("App_CookieButton__3cvqF");
