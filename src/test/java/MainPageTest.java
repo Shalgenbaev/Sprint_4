@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver; // Замените на используемый вами драйвер (если необходимо)
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,15 +28,15 @@ public class MainPageTest {
     // Определяем параметры для теста
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                { 0, getExpectedAnswer(0) },
-                { 1, getExpectedAnswer(1) },
-                { 2, getExpectedAnswer(2) },
-                { 3, getExpectedAnswer(3) },
-                { 4, getExpectedAnswer(4) },
-                { 5, getExpectedAnswer(5) },
-                { 6, getExpectedAnswer(6) },
-                { 7, getExpectedAnswer(7) }
+        return Arrays.asList(new Object[][]{
+                {0, getExpectedAnswer(0)},
+                {1, getExpectedAnswer(1)},
+                {2, getExpectedAnswer(2)},
+                {3, getExpectedAnswer(3)},
+                {4, getExpectedAnswer(4)},
+                {5, getExpectedAnswer(5)},
+                {6, getExpectedAnswer(6)},
+                {7, getExpectedAnswer(7)}
         });
     }
 

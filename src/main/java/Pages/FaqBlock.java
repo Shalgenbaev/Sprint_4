@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 
 public class FaqBlock {
     private static final By QUESTIONS_BLOCK = By.className("Home_FourPart__1uthg");
-
+    // Вопросы блока FAQ
     private static final By[] QUESTIONS = {
             By.id("accordion__heading-0"),
             By.id("accordion__heading-1"),
@@ -15,7 +15,7 @@ public class FaqBlock {
             By.id("accordion__heading-6"),
             By.id("accordion__heading-7")
     };
-
+    // Ответы блока FAQ
     private static final By[] ANSWERS = {
             By.id("accordion__panel-0"),
             By.id("accordion__panel-1"),
@@ -26,7 +26,7 @@ public class FaqBlock {
             By.id("accordion__panel-6"),
             By.id("accordion__panel-7")
     };
-
+    // ожидаемые ответы
     private static final String[] EXPECTED_ANSWERS = {
             "Сутки — 400 рублей. Оплата курьеру — наличными или картой.",
             "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.",

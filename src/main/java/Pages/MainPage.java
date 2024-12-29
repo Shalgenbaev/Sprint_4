@@ -1,5 +1,6 @@
 package Pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,7 +17,7 @@ import static Pages.FaqBlock.getExpectedAnswer;
 import static Pages.FaqBlock.getErrorMessage;
 
 public class MainPage {
-    private static final int DEFAULT_TIMEOUT = 3; // Временной таймаут для ожидания
+    private static final int DEFAULT_TIMEOUT = 5; // Временной таймаут для ожидания
 
     private WebDriver driver; // Объект WebDriver для управления браузером
 
