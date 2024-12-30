@@ -6,7 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.time.Duration;
 
 public class DriverRule {
-    private static final String BROWSER_NAME = "firefox";
+    private static final String BROWSER_NAME = "chrome";
     private static final String PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
     private static final By CLOSE_COOKIE = By.className("App_CookieButton__3cvqF");
     private static final int DEFAULT_TIMEOUT = 3;
