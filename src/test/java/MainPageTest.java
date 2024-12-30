@@ -11,7 +11,7 @@ import java.util.Collection;
 
 import static Pages.FaqBlock.*;
 
-@RunWith(Parameterized.class) // Указываем, что тест будет параметризован
+@RunWith(Parameterized.class)
 public class MainPageTest {
 
     private static DriverRule driverRule; // Статический экземпляр DriverRule
@@ -54,7 +54,7 @@ public class MainPageTest {
 
     @Test
     public void testFaqAnswer() {
-        MainPage mainPage = new MainPage(driver); // Используем общий экземпляр WebDriver
+        MainPage mainPage = new MainPage(driver);
         mainPage.scrollToQuestionsBlock();
         mainPage.clickQuestion(questionIndex);
         mainPage.verifyAnswerText(questionIndex);

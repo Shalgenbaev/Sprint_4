@@ -9,6 +9,7 @@ public class DriverRule {
     private static final String BROWSER_NAME = "firefox";
     private static final String PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
     private static final By CLOSE_COOKIE = By.className("App_CookieButton__3cvqF");
+    private static final int DEFAULT_TIMEOUT = 3;
 
     private WebDriver driver; // Поле для хранения драйвера
 
@@ -26,7 +27,7 @@ public class DriverRule {
 
     // Метод для инициализации страницы
     private void initialize() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(DEFAULT_TIMEOUT));
         driver.get(PAGE_URL);
         driver.findElement(CLOSE_COOKIE).click(); // Закрываем окно cookies
     }

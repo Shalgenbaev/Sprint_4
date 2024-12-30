@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 
-import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public class OrderTest {
@@ -27,7 +26,7 @@ public class OrderTest {
     private final String color;
     private final String comment;
 
-    // Конструктор для параметризированного теста
+    // Конструктор для параметризованного теста
     public OrderTest(int indexButton, String name, String surname, String address, String metro,
                      String phone, String dateOrder, String period, String color, String comment) {
         this.indexButton = indexButton;
@@ -55,8 +54,8 @@ public class OrderTest {
             "Комментарий: {9}")
     public static Object[][] getTestData() {
         return new Object[][] {
-                {0, "Аня", "Богданова", "Москва", "Выставочная", "+7901234567", "10.03.2023", "трое суток", "grey", "Проверка 1"},
-                {1, "Ваня", "Богданов", "Москва", "Беговая", "+7902345678", "20.03.2023", "сутки", "black", "Проверка 2"}
+                {0, "Иван", "Иванов", "пр. Победы 1", "Выставочная", "+79225553555", "10.03.2023", "трое суток", "grey", "Проверка 1"},
+                {1, "Петр", "Петров", "пр. Мира 2", "Беговая", "+79058111111", "20.03.2023", "сутки", "black", "Проверка 2"}
         };
     }
 
@@ -92,8 +91,5 @@ public class OrderTest {
         orderStatus.clickBottomOrderButton();
         orderStatus.clickShowStatusButton();
 
-        // Проверка успешного завершения заказа
-        // Uncomment the following line to enable order success assertion
-        // assertTrue("Отсутствует сообщение об успешном завершении заказа", orderStatus.isOrderPlacedSuccessfully());
     }
 }

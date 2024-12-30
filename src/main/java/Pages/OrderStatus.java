@@ -9,8 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+
 public class OrderStatus {
-    private static final int DEFAULT_TIMEOUT = 5;
 
     // Верхняя кнопка Заказать
     private final By TOP_ORDER_BUTTON = By.xpath(".//div[starts-with(@class, 'Header')]/button[text()='Заказать']");
@@ -24,8 +24,6 @@ public class OrderStatus {
     private final By ADDRESS_FIELD = By.xpath(".//input[contains(@placeholder,'Адрес')]");
     // Поле выбора станции метро
     private final By SUBWAY_STATION_FIELD = By.xpath(".//input[contains(@placeholder,'метро')]");
-    // Станция метро Черкизовская (можно использовать при выборе, если необходимо)
-    //private final By SUBWAY_STATION = By.xpath("//div[contains(text(), 'Черкизовская')]");
     // Поле ввода телефона
     private final By PHONE_NUMBER_FIELD = By.xpath(".//input[contains(@placeholder,'Телефон')]");
     // Кнопка далее
@@ -36,10 +34,6 @@ public class OrderStatus {
     private final By DATE_FIELD = By.xpath(".//input[contains(@placeholder,'Когда')]");
     // Поле для выбора периода аренды
     private final By RENTAL_PERIOD_FIELD = By.xpath(".//span[@class='Dropdown-arrow']");
-    // Опции периода аренды
-    //private final By RENTAL_PERIOD_LIST = By.xpath(".//div[@class='Dropdown-option']");
-    // Чек-боксы с цветами
-    //private final By COLOR_CHECKBOXES = By.xpath(".//div[contains(text(),'Цвет')]/parent::div//input");
     // Поле ввода комментария для курьера
     private final By COMMENT_FOR_COURIER_FIELD = By.xpath(".//input[contains(@placeholder,'Комментарий для курьера')]");
 
@@ -48,6 +42,7 @@ public class OrderStatus {
     private final By ACCEPT_ORDER_BUTTON = By.xpath(".//button[text()='Да']");
     // Кнопка перехода к статусу заказа
     private final By SHOW_STATUS_BUTTON = By.xpath(".//button[text()='Посмотреть статус']");
+
 
     private WebDriver driver;
 
@@ -61,14 +56,10 @@ public class OrderStatus {
         if (isTopButton == 0) {
             driver.findElement(TOP_ORDER_BUTTON).click();
         } else if (isTopButton == 1) {
-            // Находим элемент BOTTOM_ORDER_BUTTON
             WebElement bottomOrderButton = driver.findElement(BOTTOM_ORDER_BUTTON);
-            // Прокручиваем к элементу
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", bottomOrderButton);
-            // Убедитесь, что элемент видим перед кликом
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(bottomOrderButton));
-            // Кликаем по элементу
             bottomOrderButton.click();
         }
     }
