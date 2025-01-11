@@ -1,8 +1,27 @@
-package Pages;
+package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class FaqBlock {
+import java.time.Duration;
+
+import static org.junit.Assert.assertEquals;
+
+public class MainPage {
+    private static final int DEFAULT_TIMEOUT = 5;
+    // Локатор для закрытия всплывающего окна с куками
+    public static final By CLOSE_COOKIE = By.className("App_CookieButton__3cvqF");
+    // Верхняя кнопка Заказать
+    protected static final By TOP_ORDER_BUTTON = By.xpath(".//div[starts-with(@class, 'Header')]/button[text()='Заказать']");
+    // Нижняя кнопка заказа
+    protected static final By BOTTOM_ORDER_BUTTON = By.xpath("//div[contains(@class, 'Home_FinishButton__1_cWm')]//button[text()='Заказать']");
+
+
+    // Блок вопросов FAQ
     private static final By QUESTIONS_BLOCK = By.className("Home_FourPart__1uthg");
     // Вопросы блока FAQ
     private static final By[] QUESTIONS = {
@@ -26,8 +45,8 @@ public class FaqBlock {
             By.id("accordion__panel-6"),
             By.id("accordion__panel-7")
     };
-    // ожидаемые ответы
-    private static final String[] EXPECTED_ANSWERS = {
+    // Ожидаемые ответы
+    public static final String[] EXPECTED_ANSWERS = {
             "Сутки — 400 рублей. Оплата курьеру — наличными или картой.",
             "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.",
             "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30.",
@@ -40,23 +59,39 @@ public class FaqBlock {
 
     private static final String ERROR_MESSAGE = "Текст в строке не соответствует ожиданиям";
 
-    public static By getQuestionsBlock() {
-        return QUESTIONS_BLOCK;
+    private WebDriver driver; // Объект WebDriver для управления браузером
+
+    // Конструктор класса MainPage, принимающий объект WebDriver
+    public MainPage(WebDriver driver) {
+        this.driver = driver;
     }
 
-    public static By getQuestion(int index) {
-        return QUESTIONS[index];
+    // Метод для прокрутки к блоку вопросов
+    public MainPage scrollToQuestionsBlock() {
+        WebElement questionsBlock = driver.findElement(QUESTIONS_BLOCK);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", questionsBlock);
+        return this;
     }
 
-    public static By getAnswer(int index) {
-        return ANSWERS[index];
+    // Метод для клика на вопрос по индексу
+    public MainPage clickQuestion(int index) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMEOUT));
+            WebElement questionElement = wait.until(ExpectedConditions.elementToBeClickable(QUESTIONS[index]));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", questionElement);
+        } catch (Exception e) {
+            System.out.println("Ошибка при клике на вопрос: " + e.getMessage());
+        }
+        return this;
     }
 
-    public static String getExpectedAnswer(int index) {
-        return EXPECTED_ANSWERS[index];
-    }
+    // Метод для проверки текста ответа на вопрос по индексу
+    public MainPage verifyAnswerText(int index) {
+        new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMEOUT))
+                .until(ExpectedConditions.visibilityOfElementLocated(ANSWERS[index]));
 
-    public static String getErrorMessage() { // Метод для получения сообщения об ошибке
-        return ERROR_MESSAGE;
+        String actualAnswer = driver.findElement(ANSWERS[index]).getText();
+        assertEquals(ERROR_MESSAGE, EXPECTED_ANSWERS[index], actualAnswer);
+        return this;
     }
 }

@@ -1,11 +1,10 @@
-import Pages.OrderStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-
+import pages.OrderStatus;
 
 @RunWith(Parameterized.class)
 public class OrderTest {
@@ -27,8 +26,7 @@ public class OrderTest {
     private final String comment;
 
     // Конструктор для параметризованного теста
-    public OrderTest(int indexButton, String name, String surname, String address, String metro,
-                     String phone, String dateOrder, String period, String color, String comment) {
+    public OrderTest(int indexButton, String name, String surname, String address, String metro, String phone, String dateOrder, String period, String color, String comment) {
         this.indexButton = indexButton;
         this.name = name;
         this.surname = surname;
@@ -53,11 +51,34 @@ public class OrderTest {
             "Цвет: {8}; " +
             "Комментарий: {9}")
     public static Object[][] getTestData() {
-        return new Object[][] {
-                {0, "Иван", "Иванов", "пр. Победы 1", "Выставочная", "+79225553555", "10.03.2023", "трое суток", "grey", "Проверка 1"},
-                {1, "Петр", "Петров", "пр. Мира 2", "Беговая", "+79058111111", "20.03.2023", "сутки", "black", "Проверка 2"}
+        return new Object[][]{
+                {
+                        0,                              // Способ вызова
+                        "Иван",                         // Имя
+                        "Иванов",                      // Фамилия
+                        "пр. Победы 1",                 // Адрес
+                        "Выставочная",                  // Метро
+                        "+79225553555",                 // Телефон
+                        "10.03.2023",                   // Когда нужен
+                        "трое суток",                   // Срок аренды
+                        "grey",                         // Цвет
+                        "Проверка 1"                   // Комментарий
+                },
+                {
+                        1,                              // Способ вызова
+                        "Петр",                         // Имя
+                        "Петров",                       // Фамилия
+                        "пр. Мира 2",                   // Адрес
+                        "Беговая",                      // Метро
+                        "+79058111111",                 // Телефон
+                        "20.03.2023",                   // Когда нужен
+                        "сутки",                        // Срок аренды
+                        "black",                        // Цвет
+                        "Проверка 2"                   // Комментарий
+                }
         };
     }
+
 
     @Before
     public void setUp() {
@@ -67,15 +88,9 @@ public class OrderTest {
         orderStatus = new OrderStatus(driver); // Инициализация страницы заказа
     }
 
-    @After
-    public void tearDown() {
-        driverRule.tearDown(); // Завершение работы драйвера после каждого теста
-    }
-
     @Test
     public void orderTest() throws InterruptedException {
-        // Выбор кнопки на основе параметра
-        orderStatus.clickOrderButton(indexButton);
+        orderStatus.clickOrderButton(indexButton); // Выбор кнопки на основе параметра
 
         // Заполнение данных
         orderStatus.inputName(name);
@@ -90,6 +105,10 @@ public class OrderTest {
         orderStatus.inputCommentForCourier(comment);
         orderStatus.clickBottomOrderButton();
         orderStatus.clickShowStatusButton();
+    }
 
+    @After
+    public void tearDown() {
+        driverRule.tearDown(); // Завершение работы драйвера после каждого теста
     }
 }

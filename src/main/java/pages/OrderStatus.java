@@ -1,4 +1,4 @@
-package Pages;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -9,42 +9,33 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-
 public class OrderStatus {
 
-    // Верхняя кнопка Заказать
-    private final By TOP_ORDER_BUTTON = By.xpath(".//div[starts-with(@class, 'Header')]/button[text()='Заказать']");
-    // Нижняя кнопка заказа
-    private final By BOTTOM_ORDER_BUTTON = By.xpath("//div[contains(@class, 'Home_FinishButton__1_cWm')]//button[text()='Заказать']");
-    // Поле ввода имени
+    // Поля для локаторов
     private static final By NAME_FIELD = By.xpath(".//input[contains(@placeholder,'Имя')]");
-    // Поле ввода фамилии
     private static final By SURNAME_FIELD = By.xpath(".//input[contains(@placeholder,'Фамилия')]");
-    // Поле ввода адреса
-    private final By ADDRESS_FIELD = By.xpath(".//input[contains(@placeholder,'Адрес')]");
-    // Поле выбора станции метро
-    private final By SUBWAY_STATION_FIELD = By.xpath(".//input[contains(@placeholder,'метро')]");
-    // Поле ввода телефона
-    private final By PHONE_NUMBER_FIELD = By.xpath(".//input[contains(@placeholder,'Телефон')]");
-    // Кнопка далее
-    private final By NEXT_BUTTON = By.xpath(".//button[text()='Далее']");
-    // Кнопка перехода на предыдущий шаг заполнения данных при заказе
-    private final By BACK_BUTTON = By.xpath(".//button[text()='Назад']");
-    // Поле ввода даты
-    private final By DATE_FIELD = By.xpath(".//input[contains(@placeholder,'Когда')]");
-    // Поле для выбора периода аренды
-    private final By RENTAL_PERIOD_FIELD = By.xpath(".//span[@class='Dropdown-arrow']");
-    // Поле ввода комментария для курьера
-    private final By COMMENT_FOR_COURIER_FIELD = By.xpath(".//input[contains(@placeholder,'Комментарий для курьера')]");
+    private static final By ADDRESS_FIELD = By.xpath(".//input[contains(@placeholder,'Адрес')]");
+    private static final By SUBWAY_STATION_FIELD = By.xpath(".//input[contains(@placeholder,'метро')]");
+    private static final By PHONE_NUMBER_FIELD = By.xpath(".//input[contains(@placeholder,'Телефон')]");
+    private static final By NEXT_BUTTON = By.xpath(".//button[text()='Далее']");
+    private static final By BACK_BUTTON = By.xpath(".//button[text()='Назад']");
+    private static final By DATE_FIELD = By.xpath(".//input[contains(@placeholder,'Когда')]");
+    private static final By RENTAL_PERIOD_FIELD = By.xpath(".//span[@class='Dropdown-arrow']");
+    private static final By COMMENT_FOR_COURIER_FIELD = By.xpath(".//input[contains(@placeholder,'Комментарий для курьера')]");
+    private static final By ORDER_BUTTON = By.xpath("//div[contains(@class, 'Order_Buttons__1xGrp')]//button[text()='Заказать']");
+    private static final By ACCEPT_ORDER_BUTTON = By.xpath(".//button[text()='Да']");
+    private static final By SHOW_STATUS_BUTTON = By.xpath(".//button[text()='Посмотреть статус']");
 
-    private final By ORDER_BUTTON = By.xpath("//div[contains(@class, 'Order_Buttons__1xGrp')]//button[text()='Заказать']");
-    // Кнопка подтверждения заказа
-    private final By ACCEPT_ORDER_BUTTON = By.xpath(".//button[text()='Да']");
-    // Кнопка перехода к статусу заказа
-    private final By SHOW_STATUS_BUTTON = By.xpath(".//button[text()='Посмотреть статус']");
+    // Локатор для выбора станции метро по имени
+    private static final String SUBWAY_STATION_OPTION_XPATH = "//div[contains(text(), '%s')]"; // формат для выбора станции
 
+    // Локатор для выбора периода аренды
+    private static final String RENTAL_PERIOD_OPTION_XPATH = "//div[contains(text(), '%s')]"; // формат для выбора периода аренды
 
-    private WebDriver driver;
+    // Локатор для выбранного цвета (например, для чекбоксов)
+    private static final String COLOR_CHECKBOX_XPATH = "//input[@id='%s']"; // формат для чекбоксов
+
+    private WebDriver driver; // WebDriver для взаимодействия с браузером
 
     // Конструктор, принимающий объект WebDriver
     public OrderStatus(WebDriver driver) {
@@ -54,16 +45,15 @@ public class OrderStatus {
     // Метод для клика по кнопке заказа
     public void clickOrderButton(int isTopButton) {
         if (isTopButton == 0) {
-            driver.findElement(TOP_ORDER_BUTTON).click();
+            driver.findElement(MainPage.TOP_ORDER_BUTTON).click();
         } else if (isTopButton == 1) {
-            WebElement bottomOrderButton = driver.findElement(BOTTOM_ORDER_BUTTON);
+            WebElement bottomOrderButton = driver.findElement(MainPage.BOTTOM_ORDER_BUTTON);
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", bottomOrderButton);
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(bottomOrderButton));
             bottomOrderButton.click();
         }
     }
-
 
     // Метод ввода имени, принимающий имя как параметр
     public void inputName(String name) {
@@ -83,9 +73,8 @@ public class OrderStatus {
     // Метод выбора станции метро
     public void inputSubwayStation(String subwayStation) {
         driver.findElement(SUBWAY_STATION_FIELD).click();
-        // API необходимо, если вы хотите кликнуть по конкретной станции
-        // Например, выполнить поиск по названию метро и кликнуть по нему
-        driver.findElement(By.xpath("//div[contains(text(), '" + subwayStation + "')]")).click();
+        // Клик по конкретной станции метро
+        driver.findElement(By.xpath(String.format(SUBWAY_STATION_OPTION_XPATH, subwayStation))).click();
     }
 
     // Метод ввода номера телефона, принимающий номер как параметр
@@ -106,14 +95,13 @@ public class OrderStatus {
     // Метод выбора периода аренды, принимающий его как параметр
     public void chooseRentalPeriod(String rentalPeriod) {
         driver.findElement(RENTAL_PERIOD_FIELD).click();
-        // Здесь подразумевается, что период аренды имеет уникальный текст для выбора
-        driver.findElement(By.xpath("//div[contains(text(), '" + rentalPeriod + "')]")).click();
+        driver.findElement(By.xpath(String.format(RENTAL_PERIOD_OPTION_XPATH, rentalPeriod))).click();
     }
 
     // Метод выбора чекбокса цвета, принимающий цвет как параметр
     public void chooseColorCheckboxes(String color) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        By colorCheckbox = By.xpath("//input[@id='" + color + "']");
+        By colorCheckbox = By.xpath(String.format(COLOR_CHECKBOX_XPATH, color)); // Используем форматированный локатор
         wait.until(ExpectedConditions.visibilityOfElementLocated(colorCheckbox));
         driver.findElement(colorCheckbox).click();
     }
