@@ -66,6 +66,12 @@ public class MainPage {
         this.driver = driver;
     }
 
+    // Метод для закрытия всплывающего окна с куками
+    public void closeCookiePopup() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMEOUT));
+        wait.until(ExpectedConditions.elementToBeClickable(CLOSE_COOKIE)).click();
+    }
+
     // Метод для прокрутки к блоку вопросов
     public MainPage scrollToQuestionsBlock() {
         WebElement questionsBlock = driver.findElement(QUESTIONS_BLOCK);
